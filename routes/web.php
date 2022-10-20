@@ -25,4 +25,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/home-list', [App\Http\Controllers\MainController::class, 'list'])->name('list');
     Route::get('/add-home', [App\Http\Controllers\MainController::class, 'addHome'])->name('addHome');
     Route::post('/submit-home', [App\Http\Controllers\MainController::class, 'submitHome'])->name('submitHome');
+    Route::get('/edit-home/{id}', [App\Http\Controllers\MainController::class, 'editHome'])->name('editHome');
+    Route::get('/edit-home-status', [App\Http\Controllers\MainController::class, 'editHomeStatus'])->name('editHomeStatus');
+    Route::get('/delete-home-image', [App\Http\Controllers\MainController::class, 'deleteimage'])->name('deleteimage');
+    Route::get('/know-more', [App\Http\Controllers\MainController::class, 'knowMore'])->name('knowMore');
+    Route::get('/filter-properties', [App\Http\Controllers\MainController::class, 'filterproperty'])->name('filterproperty');
+    Route::get('/filter-order', [App\Http\Controllers\MainController::class, 'filterorder'])->name('filterorder');
 });

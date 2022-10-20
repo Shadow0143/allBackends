@@ -36,69 +36,100 @@
                 <div class="card-body">
                     <form action="{{route('submitHome')}}" method="post" enctype="multipart/form-data">
                         @csrf
+
+                        @if($data)
+                        <input type="hidden" name="id" id="id" value="{{$data->id}}">
+
+                        @endif
                         <div class="row">
                             <div class="col-12">
                                 <label for="type">Type <span class="text-danger">*</span> </label>
                                 <br>
-                                <input type="radio" name="type" id="type " value="new" checked class="typefield"> New
-                                <input type="radio" name="type" id="type " value="existing" class="typefield"> Existing
+                                <input type="radio" name="type" id="type " value="new" @if($data)
+                                    @if($data->type=='new')checked @endif @endif class="typefield">
+                                New
+                                <input type="radio" name="type" id="type " value="existing" class="typefield" @if($data)
+                                    @if($data->type=='existing')checked @endif @endif> Existing
                             </div>
                             <div class="col-6">
                                 <label for="title">Title <span class="text-danger">*</span></label>
                                 <input type="text" name="title" id="title" placeholder="Title" class="form-control"
-                                    required>
+                                    required @if($data) value="{{$data->title}}" @endif>
                             </div>
                             <div class="col-6">
                                 <label for="price">price <span class="text-danger">*</span></label>
                                 <input type="number" name="price" id="price" placeholder="Price" class="form-control"
-                                    required>
+                                    required @if($data) value="{{$data->price}}" @endif>
                             </div>
-                            <div class="col-12 durationfield" style="display: none">
+                            <div class="col-12 durationfield" @if($data) @if($data->duration) style="display: block"
+                                @else
+                                style="display: none" @endif @else style="display: none" @endif>
                                 <label for="duration">Duration</label>
                                 <input type="text" name="duration" id="duration" class="form-control"
-                                    placeholder="Duration">
+                                    placeholder="Duration" @if($data) value="{{$data->duration}}" @endif>
                             </div>
                             <div class="col-12">
                                 <label for="description">Description (Facilities)<span class="text-danger">*</span>
                                 </label>
                                 <textarea name="description" id="description" cols="30" rows="10" class="form-control "
-                                    placeholder="Address"></textarea>
+                                    placeholder="Address">@if($data) {{$data->description}} @endif</textarea>
                             </div>
                             <div class="col-3">
                                 <label for="city">City</label>
-                                <input type="text" name="city" id="city" placeholder="City" class="form-control">
+                                <input type="text" name="city" id="city" placeholder="City" class="form-control"
+                                    @if($data) value="{{$data->city}}" @endif>
                             </div>
                             <div class="col-3">
                                 <label for="state">State</label>
-                                <input type="text" name="state" id="state" placeholder="State" class="form-control">
+                                <input type="text" name="state" id="state" placeholder="State" class="form-control"
+                                    @if($data) value="{{$data->state}}" @endif>
                             </div>
                             <div class="col-3">
                                 <label for="address">Address</label>
                                 <textarea name="address" id="address" cols="30" rows="1"
-                                    class="form-control"></textarea>
+                                    class="form-control">@if($data) {{$data->address}} @endif</textarea>
                             </div>
                             <div class="col-3">
                                 <label for="pin">Pin</label>
                                 <input type="number" name="pin" id="pin" placeholder="Pin" class="form-control"
-                                    maxlength="5">
+                                    maxlength="5" @if($data) value="{{$data->pin}}" @endif>
                             </div>
                             <div class="co-12">
                                 <label for="image">Image <span class="text-danger">*</span></label>
                                 <input type="file" name="image[]" id="image" class="form-control" multiple
-                                    placeholder="Images" required>
+                                    placeholder="Images" @if($data) @else required @endif>
                             </div>
+                            @if($image)
+                            <div class="col-12">
+                                <div class="row">
+
+                                    @foreach ($image as $key3=>$val3)
+                                    <div class="card col-3 updateimg{{$val3->id}}">
+                                        <a href="javaScript:void(0);" title="delete" data-id="{{$val3->id}}"
+                                            class="deleteimage">*</a>
+                                        <img src="{{asset('houseImage')}}/{{$val3->image}}" alt="images">
+                                    </div>
+                                    @endforeach
+                                </div>
+
+                            </div>
+                            @endif
                             <div class="col-6">
                                 <label for="availabel"> Availabel</label>
                                 <select name="availabel" id="availabel" class="form-control">
-                                    <option value="availabel"> Available</option>
-                                    <option value="occupied"> Occupied</option>
+                                    <option value="available" @if($data) {{ $data->availabel == 'available' ? 'selected'
+                                        : '' }} @endif> Available</option>
+                                    <option value="occupied" @if($data) {{ $data->availabel == 'occupied' ? 'selected' :
+                                        '' }} @endif> Occupied</option>
                                 </select>
                             </div>
                             <div class="col-6">
                                 <label for="status"> Status</label>
                                 <select name="status" id="statuss" class="form-control">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">inactive</option>
+                                    <option value="active" @if($data) {{ $data->status == 'active' ? 'selected' : '' }}
+                                        @endif>Active</option>
+                                    <option value="inactive" @if($data) {{ $data->status == 'inactive' ? 'selected' : ''
+                                        }} @endif>inactive</option>
                                 </select>
                             </div>
 
@@ -121,10 +152,25 @@
 
 
 
+
+
+
 @endsection
 
 @section('js')
 <script>
+    $('.deleteimage').on('click',function(){
+        var id = $(this).data('id');
+        $.ajax({
+            url:"{{route('deleteimage')}}",
+            type:'GET',
+            data:{id:id},
+            success:function(data){
+                $('.updateimg'+id).hide();
+            }
+        });
+    });
+
     $(document).ready(function() {
     $("input[name$='type']").click(function() {
         var test = $(this).val();
@@ -134,8 +180,6 @@
             $('.durationfield').css('display','block');
 
         }
-
-        
     });
 });
 </script>
