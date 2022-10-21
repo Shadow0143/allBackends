@@ -15,17 +15,35 @@ class Home extends Migration
     {
         Schema::create('homes', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
+            $table->string('appartment_for');
             $table->string('title');
             $table->integer('price');
-            $table->string('duration')->nullable();
             $table->longText('description');
-            $table->string('city');
-            $table->string('state');
-            $table->longText('address');
-            $table->integer('pin');
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->longText('address')->nullable();
+            $table->integer('pin')->nullable();
             $table->string('availabel');
             $table->string('status');
+            $table->string('type')->nullable();
+            $table->string('bedrooms')->nullable();
+            $table->string('bathrooms')->nullable();
+            $table->string('utilities')->nullable();
+            $table->string('wifi')->nullable();
+            $table->string('parking')->nullable();
+            $table->string('duration')->nullable();
+            $table->string('pet_friendly')->nullable();
+            $table->date('move_in_date')->nullable();
+            $table->string('size')->nullable();
+            $table->string('furnished')->nullable();
+            $table->string('appliances')->nullable();
+            $table->string('air_conditioning')->nullable();
+            $table->string('outdore_space')->nullable();
+            $table->string('smoking_permit')->nullable();
+            $table->string('amenities')->nullable();
+            $table->string('latitude')->nullable();
+            $table->integer('created_by')->nullable();
+
             $table->timestamps();
         });
     }

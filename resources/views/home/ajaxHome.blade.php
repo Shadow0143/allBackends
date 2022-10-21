@@ -52,7 +52,7 @@
 
             <p>Price :
                 <i class="las la-rupee-sign"></i> {{$val->price}} /-
-                @if ($val->type=='new')
+                @if($val->type=='new')
                 @else
                 for {{$val->duration}}
                 @endif

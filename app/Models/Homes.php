@@ -9,4 +9,9 @@ class Homes extends Model
 {
     use HasFactory;
     protected $table = 'homes';
+
+    public function posts()
+    {
+        return $this->hasMany(HomeImages::class);
+    }
 }

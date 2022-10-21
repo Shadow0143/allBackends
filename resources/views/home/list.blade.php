@@ -91,7 +91,7 @@
                             @foreach ($allhouse as $key => $val)
 
                             <div class="card-new ">
-                                @if ($val->type=='new')
+                                @if ($val->appartment_for=='new')
                                 <img src="{{asset('assets/blink.gif')}}" alt="blink-new" class="blinkimg">
                                 @else
 
@@ -101,7 +101,7 @@
                                         data-ride="carousel">
 
                                         <div class="carousel-inner">
-                                            @foreach ($val->houseImage as $key2=>$val2)
+                                            @foreach ($val->posts as $key2=>$val2)
                                             <div class="carousel-item @if($key2==0)active @endif">
                                                 <img src="{{asset('houseImage')}}/{{$val2->image}}"
                                                     alt="{{$val2->image}}" />
@@ -143,9 +143,10 @@
 
                                     <p>Price :
                                         <i class="las la-rupee-sign"></i> {{$val->price}} /-
-                                        @if ($val->type=='new')
+                                        @if($val->appartment_for=='new')
+
                                         @else
-                                        for {{$val->duration}}
+                                        <span> for {{$val->duration}} </span>
                                         @endif
 
 
@@ -232,10 +233,7 @@
 
                             <p>Price :
                                 <i class="las la-rupee-sign"></i><span id="detailsprice"> </span> /-
-                                @if ($val->type=='new')
-                                @else
-                                for {{$val->duration}}
-                                @endif
+
 
 
                             </p>

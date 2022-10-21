@@ -18,10 +18,10 @@ class MainController extends Controller
     public function list()
     {
         $allhouse = Homes::orderBy('price', 'desc')->paginate(2);
-        foreach ($allhouse as $key => $val) {
-            $houseImage = Homeimages::where('home_id', $val->id)->get();
-            $allhouse[$key]->houseImage = $houseImage;
-        }
+        // foreach ($allhouse as $key => $val) {
+        //     $houseImage = Homeimages::where('home_id', $val->id)->get();
+        //     $allhouse[$key]->houseImage = $houseImage;
+        // }
         // dd($allhouse);
         return view('home.list', compact('allhouse'));
     }
@@ -38,7 +38,7 @@ class MainController extends Controller
 
         if (!empty($request->id)) {
             $home = Homes::find($request->id);
-            $home->type = $request->type;
+            $home->appartment_for = $request->type;
             $home->title = $request->title;
             $home->price = $request->price;
             $home->duration = $request->duration;
@@ -57,7 +57,7 @@ class MainController extends Controller
                     $result = public_path('houseImage');
                     $image->move($result, $name);
                     $houseImage = new HomeImages();
-                    $houseImage->home_id = $home->id;
+                    $houseImage->homes_id = $home->id;
                     $houseImage->image  = $name;
                     $houseImage->save();
                 }
@@ -65,7 +65,7 @@ class MainController extends Controller
             toast('Your Home as been Updated!', 'success');
         } else {
             $home = new Homes();
-            $home->type = $request->type;
+            $home->appartment_for = $request->type;
             $home->title = $request->title;
             $home->price = $request->price;
             $home->duration = $request->duration;
@@ -84,7 +84,7 @@ class MainController extends Controller
                     $result = public_path('houseImage');
                     $image->move($result, $name);
                     $houseImage = new HomeImages();
-                    $houseImage->home_id = $home->id;
+                    $houseImage->homes_id = $home->id;
                     $houseImage->image  = $name;
                     $houseImage->save();
                 }
@@ -99,7 +99,7 @@ class MainController extends Controller
     public function editHome($id)
     {
         $data = Homes::find($id);
-        $image = HomeImages::where('home_id', $id)->get();
+        $image = HomeImages::where('homes_id', $id)->get();
         return view('home.addHome', compact('data', 'image'));
     }
 
@@ -124,15 +124,18 @@ class MainController extends Controller
     {
         $data = Homes::find($request->id);
 
-        $image = HomeImages::where('home_id', $request->id)->get();
+        $image = HomeImages::where('homes_id', $request->id)->get();
 
         $slider = '  <div id="carouselExampleIndicator" class="carousel slide"
         data-ride="carousel">
-
         <div class="carousel-inner">';
         foreach ($image as $key => $val) {
 
-            $slider .= '<div class="carousel-item active"><img class="d-block w-100" src="' . url('') . '/houseImage/' . $val->image . '" alt="First slide"></div>';
+            $slider .= '<div class="carousel-item ';
+            if ($key == 0) {
+                $slider .= 'active ';
+            }
+            $slider .= '"><img class="d-block w-100" src="' . url('') . '/houseImage/' . $val->image . '" alt="First slide"></div>';
         }
         $slider .= '</div>
         <a class="carousel-control-prev" href="#carouselExampleIndicator"
@@ -158,7 +161,7 @@ class MainController extends Controller
 
         $allhouse = Homes::where($request->type, 'like', '%' . $request->keyword . '%')->get();
         foreach ($allhouse as $key => $val) {
-            $houseImage = Homeimages::where('home_id', $val->id)->get();
+            $houseImage = Homeimages::where('homes_id', $val->id)->get();
             $allhouse[$key]->houseImage = $houseImage;
         }
 
@@ -174,7 +177,7 @@ class MainController extends Controller
             $allhouse = Homes::orderBy('price', $request->order)->get();
         }
         foreach ($allhouse as $key => $val) {
-            $houseImage = Homeimages::where('home_id', $val->id)->get();
+            $houseImage = Homeimages::where('homes_id', $val->id)->get();
             $allhouse[$key]->houseImage = $houseImage;
         }
 

@@ -15,10 +15,10 @@ class HomeImage extends Migration
     {
         Schema::create('homes_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('home_id');
+            $table->unsignedBigInteger('homes_id');
             $table->string('image');
             $table->timestamps();
-            $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
+            $table->foreign('homes_id')->references('id')->on('homes')->onDelete('cascade');
         });
     }
 
