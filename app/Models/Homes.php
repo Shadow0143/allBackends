@@ -14,4 +14,9 @@ class Homes extends Model
     {
         return $this->hasMany(HomeImages::class);
     }
+
+    public function homestouser()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

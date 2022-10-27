@@ -42,7 +42,11 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{route('list')}}" class="nav-link" data-key="t-analytics">
-                                    Home List </a>
+                                    Real Estates </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('vehicleList')}}" class="nav-link" data-key="t-analytics">
+                                    Old Vehicles </a>
                             </li>
 
                         </ul>

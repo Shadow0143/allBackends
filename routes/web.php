@@ -31,4 +31,13 @@ Route::prefix('admin')->group(function () {
     Route::get('/know-more', [App\Http\Controllers\MainController::class, 'knowMore'])->name('knowMore');
     Route::get('/filter-properties', [App\Http\Controllers\MainController::class, 'filterproperty'])->name('filterproperty');
     Route::get('/filter-order', [App\Http\Controllers\MainController::class, 'filterorder'])->name('filterorder');
+
+
+
+    Route::get('/vehicle-list', [App\Http\Controllers\VehicleController::class, 'vehicleList'])->name('vehicleList');
+    Route::get('/add-vehicle', [App\Http\Controllers\VehicleController::class, 'addVehicle'])->name('addVehicle');
+    Route::post('/submit-vehicle', [App\Http\Controllers\VehicleController::class, 'submitVehicle'])->name('submitVehicle');
+    Route::get('/edit-vehicle/{id}', [App\Http\Controllers\VehicleController::class, 'editVehicle'])->name('editVehicle');
+    Route::get('/delete-vehicle-image', [App\Http\Controllers\VehicleController::class, 'deleteVehicleImage'])->name('deleteVehicleImage');
+    Route::get('/filter-vehicle', [App\Http\Controllers\VehicleController::class, 'filterVehicle'])->name('filterVehicle');
 });

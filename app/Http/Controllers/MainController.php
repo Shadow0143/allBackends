@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Homes;
 use App\Models\HomeImages;
-use Alert;
-use Illuminate\Support\Facades\URL;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class MainController extends Controller
 {
@@ -17,11 +20,8 @@ class MainController extends Controller
 
     public function list()
     {
+        // $allhouse = Homes::select('homes.*', 'homestouser.name')->with('homestouser')->orderBy('price', 'desc')->paginate(2);
         $allhouse = Homes::orderBy('price', 'desc')->paginate(2);
-        // foreach ($allhouse as $key => $val) {
-        //     $houseImage = Homeimages::where('home_id', $val->id)->get();
-        //     $allhouse[$key]->houseImage = $houseImage;
-        // }
         // dd($allhouse);
         return view('home.list', compact('allhouse'));
     }
@@ -38,7 +38,7 @@ class MainController extends Controller
 
         if (!empty($request->id)) {
             $home = Homes::find($request->id);
-            $home->appartment_for = $request->type;
+            $home->appartment_for = $request->apartment_for;
             $home->title = $request->title;
             $home->price = $request->price;
             $home->duration = $request->duration;
@@ -47,13 +47,32 @@ class MainController extends Controller
             $home->state = $request->state;
             $home->address = $request->address;
             $home->pin = $request->pin;
-            $home->availabel = $request->availabel;
+            $home->available = $request->availabel;
             $home->status = $request->status;
+            $home->type = $request->apartment_type;
+            $home->bedrooms = $request->bedrooms;
+            $home->bathrooms = $request->bathrooms;
+            $home->utilities = $request->utilities;
+            $home->wifi = $request->wifi;
+            $home->parking = $request->parking;
+            $home->pet_friendly = $request->pet_friendly;
+            $home->move_in_date = $request->move_in_date;
+            $home->size = $request->size;
+            $home->furnished = $request->furnished;
+            $home->appliances = $request->appliances;
+            $home->air_conditioning = $request->air_conditioning;
+            $home->outdoor_space = $request->outdore_space;
+            $home->smoking_permit = $request->smoking_permit;
+            $home->amenities = $request->amenities;
+            $home->latitude = $request->latitude;
+            $home->longitude = $request->longitude;
+            $home->created_by = Auth::user()->id;
             $home->save();
+
             if ($request->hasfile('image')) {
 
                 foreach ($request->file('image') as $key => $image) {
-                    $name =  time() . $request->type . '-house' . $home->id . $key . '.' . $image->getClientOriginalExtension();
+                    $name = 'Property' . time() . $request->type . '-' . $home->id . '-' . $key . '.' . $image->getClientOriginalExtension();
                     $result = public_path('houseImage');
                     $image->move($result, $name);
                     $houseImage = new HomeImages();
@@ -64,8 +83,10 @@ class MainController extends Controller
             }
             toast('Your Home as been Updated!', 'success');
         } else {
+
+            // dd($request->all());
             $home = new Homes();
-            $home->appartment_for = $request->type;
+            $home->appartment_for = $request->apartment_for;
             $home->title = $request->title;
             $home->price = $request->price;
             $home->duration = $request->duration;
@@ -74,13 +95,32 @@ class MainController extends Controller
             $home->state = $request->state;
             $home->address = $request->address;
             $home->pin = $request->pin;
-            $home->availabel = $request->availabel;
+            $home->available = $request->availabel;
             $home->status = $request->status;
+            $home->type = $request->apartment_type;
+            $home->bedrooms = $request->bedrooms;
+            $home->bathrooms = $request->bathrooms;
+            $new_utilitie = implode(',', $request->utilities);
+            $home->utilities = $new_utilitie;
+            $home->wifi = $request->wifi;
+            $home->parking = $request->parking;
+            $home->pet_friendly = $request->pet_friendly;
+            $home->move_in_date = $request->move_in_date;
+            $home->size = $request->size;
+            $home->furnished = $request->furnished;
+            $home->appliances = $request->appliances;
+            $home->air_conditioning = $request->air_conditioning;
+            $home->outdoor_space = $request->outdore_space;
+            $home->smoking_permit = $request->smoking_permit;
+            $home->amenities = $request->amenities;
+            $home->latitude = $request->latitude;
+            $home->longitude = $request->longitude;
+            $home->created_by = Auth::user()->id;
             $home->save();
 
             if ($request->hasfile('image')) {
                 foreach ($request->file('image') as $key => $image) {
-                    $name =  time() . $request->type . '-house' . $home->id . $key . '.' . $image->getClientOriginalExtension();
+                    $name = 'Property' . time() . $request->type . '-' . $home->id . '-' . $key . '.' . $image->getClientOriginalExtension();
                     $result = public_path('houseImage');
                     $image->move($result, $name);
                     $houseImage = new HomeImages();
@@ -157,7 +197,6 @@ class MainController extends Controller
 
     public function filterproperty(Request $request)
     {
-        // dd($request->all());
 
         $allhouse = Homes::where($request->type, 'like', '%' . $request->keyword . '%')->get();
         foreach ($allhouse as $key => $val) {
@@ -165,7 +204,6 @@ class MainController extends Controller
             $allhouse[$key]->houseImage = $houseImage;
         }
 
-        // dd($allhouse);
         return view('home.ajaxHome', compact('allhouse'));
     }
 
@@ -181,7 +219,21 @@ class MainController extends Controller
             $allhouse[$key]->houseImage = $houseImage;
         }
 
-        // dd($allhouse);
         return view('home.ajaxHome', compact('allhouse'));
+    }
+
+
+
+
+
+
+
+
+    //++++++++++++++++++++ Vehicles  ++++++++++++++++++++++++++++++++
+
+
+    public function vehicleList()
+    {
+        return view();
     }
 }

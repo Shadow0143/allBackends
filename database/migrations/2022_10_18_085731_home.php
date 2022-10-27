@@ -23,7 +23,7 @@ class Home extends Migration
             $table->string('state')->nullable();
             $table->longText('address')->nullable();
             $table->integer('pin')->nullable();
-            $table->string('availabel');
+            $table->string('available');
             $table->string('status');
             $table->string('type')->nullable();
             $table->string('bedrooms')->nullable();
@@ -42,6 +42,7 @@ class Home extends Migration
             $table->string('smoking_permit')->nullable();
             $table->string('amenities')->nullable();
             $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->integer('created_by')->nullable();
 
             $table->timestamps();

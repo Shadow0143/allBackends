@@ -60,6 +60,17 @@
 
             </p>
             <p>
+                @if ($val->bedrooms)
+                <i class=" las la-bed" title="Bedrooms"></i> {{$val->bedrooms}} &nbsp;
+                @endif
+                @if ($val->bathrooms)
+                <i class=" las la-bath" title="Bathrooms"></i> {{$val->bathrooms}} &nbsp;
+                @endif
+                @if ($val->size)
+                <i class=" las la-hotel" title="Size"></i>{{$val->size}}
+                @endif
+            </p>
+            <p>
                 Address : {{$val->city}},{{$val->state}},{{$val->address}},{{$val->pin}}
             </p>
             <p>
@@ -78,7 +89,15 @@
                 <a href="javaScript:void(0);" data-id="{{$val->id}}" class="knowmore">
                     Know more
                     <i class="las la-arrow-righ"></i>
-                </a>
+                </a><br>
+                @if ($val->latitude && $val->longitude)
+
+                <iframe
+                    src="https://www.google.com/maps?q={{$val->latitude}},{{$val->longitude}}&hl=en&z=14&amp;output=embed"
+                    width="250" height="150" referrerpolicy="no-referrer-when-downgrade" allowfullscreen="yes"
+                    loading="lazy">
+                </iframe>
+                @endif
             </p>
 
         </div>

@@ -19,12 +19,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Home List</h4>
+                    <h4 class="mb-sm-0">Vehicles List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                            <li class="breadcrumb-item active">Home List</li>
+                            <li class="breadcrumb-item active">Vehicles List</li>
                         </ol>
                     </div>
 
@@ -37,16 +37,16 @@
                 <div class="card" id="tasksList">
                     <div class="card-header border-0">
                         <div class="d-flex align-items-center">
-                            <h5 class="card-title mb-0 flex-grow-1">All Properties</h5>
+                            <h5 class="card-title mb-0 flex-grow-1">All Vehicles</h5>
                             <div class="flex-shrink-0">
-                                <a class="btn btn-danger add-btn" href="{{route('addHome')}}"><i
+                                <a class="btn btn-danger add-btn" href="{{route('addVehicle')}}"><i
                                         class="ri-add-line align-bottom me-1"></i> Add
-                                    Property</a>
+                                    Vehicles</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-12 ">
+                    {{-- <div class="col-12 ">
                         <div class="row pl-5<">
                             <div class="col-3">
                                 <label for="type">Search Type</label>
@@ -82,13 +82,13 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!--end card-body-->
                     <div class="card-body" id="resultdata">
 
                         <div class="container">
-                            @foreach ($allhouse as $key => $val)
+                            {{-- @foreach ($allhouse as $key => $val)
 
                             <div class="card-new ">
                                 @if ($val->appartment_for=='new')
@@ -200,7 +200,7 @@
                             <span style="">
                                 {{ $allhouse->links() }}
 
-                            </span>
+                            </span> --}}
                         </div>
                         <!--end card-body-->
                     </div>

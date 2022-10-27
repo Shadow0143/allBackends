@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class HomeImage extends Migration
+class VehicleImages extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class HomeImage extends Migration
      */
     public function up()
     {
-        Schema::create('homes_images', function (Blueprint $table) {
+        Schema::create('vehicle_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('homes_id');
+            $table->unsignedBigInteger('vehicle_id');
             $table->string('image');
             $table->timestamps();
-            $table->foreign('homes_id')->references('id')->on('homes')->onDelete('cascade');
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ class HomeImage extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('homes_images');
+        Schema::dropIfExists('vehicle_images');
     }
 }
